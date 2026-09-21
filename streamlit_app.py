@@ -1,3 +1,5 @@
+import requests
+
 import streamlit as st
 from snowflake.snowpark.functions import col
 
@@ -25,6 +27,10 @@ ingredients = st.multiselect(
 if ingredients:
     ingredients_string = ', '.join(ingredients)
     
+    for fruit in ingredients:
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        df_smoothie = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+
     # st.write(ingredienst_string)
 
     insert_orders_stmt = f"""
