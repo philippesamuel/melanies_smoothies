@@ -38,7 +38,11 @@ if ingredients:
         url = f"https://my.smoothiefroot.com/api/fruit/{search_on}"
         st.subheader(f"{fruit} Nutrition Information")
         smoothiefroot_response = requests.get(url)
-        df_smoothie = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        
+        df_smoothie = st.table(
+            data=smoothiefroot_response.json()["nutrition"], 
+            width="content",
+            )
 
     # st.write(ingredienst_string)
 
