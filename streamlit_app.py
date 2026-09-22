@@ -27,7 +27,8 @@ ingredients = st.multiselect(
 
 if ingredients:
     ingredients_string = ', '.join(ingredients)
-        
+    
+    st.subheader("Nutritional Information")        
     for fruit in ingredients:
         search_on = (
             df_fruits
@@ -36,11 +37,13 @@ if ingredients:
                 .first()[0]
             )
         url = f"https://my.smoothiefroot.com/api/fruit/{search_on}"
-        st.subheader(f"{fruit} Nutrition Information")
-        smoothiefroot_response = requests.get(url)
+        st.text(fruit)
+        
+        response = requests.get(url)
+        data = response.json()
         
         df_smoothie = st.table(
-            data=smoothiefroot_response.json()["nutrition"], 
+            data=data.get("nutrition") or data, 
             width="content",
             )
 
